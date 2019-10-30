@@ -1,16 +1,53 @@
+import {createBottomTabNavigator} from 'react-navigation-tabs';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+
 import MainScreen from './pages/main';
 import ProfileScreen from './pages/profile';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
-import { createAppContainer } from 'react-navigation';
+import SignInScreen from './pages/signin';
+import CategoriaScreen from './pages/categoria';
 
-const MainNavigator = createBottomTabNavigator({
-    Main: {
-        screen: MainScreen,
-    },
-    Profile : {
-        screen: ProfileScreen,
-    },
-    
+const AuthStack = createStackNavigator({
+  Sign: {screen: SignInScreen},
 });
 
-export default createAppContainer(MainNavigator)
+// criar a navegacao
+const MainNavigator = createBottomTabNavigator(
+  {
+    Main: {
+      screen: MainScreen,
+    },
+    Profile: {
+      screen: ProfileScreen,
+    },
+    Categoria: {
+        screen: CategoriaScreen,
+      },
+  },
+  {
+    initialRouteName: 'Main',
+    tabBarOptions: {
+      showLabel: false,
+      showIcon: true,
+      activeBackgroundColor: '#9900e6',
+      inactiveBackgroundColor: '#b727ff',
+      style: {
+        width: '100%',
+        height: 50
+      }
+    }
+  },
+);
+
+// container
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      MainNavigator,
+      AuthStack,
+    },
+    {
+      initialRouteName: 'AuthStack',
+    },
+  ),
+);
