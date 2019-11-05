@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  Fragment,
   StatusBar,
   TextInput,
   TouchableOpacity,
@@ -41,8 +40,7 @@ class App extends Component {
       }),
     })
       .then(resposta => resposta.json())
-      // sharedpreferences
-      .then(data => this._irParaHome(data.token))
+      .then(data => this._botaoLogar(data.token))
       .catch(erro => console.warn(erro));
   };
 
@@ -50,7 +48,6 @@ class App extends Component {
     if (token != null) {
       try {
         await AsyncStorage.setItem('@roman:token', roken);
-        // redirecionar
         this.props.navigation.navigate('MainNavigator');
       } catch (error) {}
     }
